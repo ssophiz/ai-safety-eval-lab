@@ -1,0 +1,12 @@
+﻿cff-version: 1.2.0
+title: AI Safety Evaluation Lab
+message: If you use this software or its published evaluation artifacts, please cite it using this metadata.
+type: software
+authors:
+  - family-names: Kim
+    given-names: Won Kyeom
+repository-code: https://github.com/ssophiz/ai-safety-eval-lab
+url: https://github.com/ssophiz/ai-safety-eval-lab
+license: MIT
+version: 0.3.0
+date-released: 2026-09-20
