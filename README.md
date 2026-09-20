@@ -106,6 +106,20 @@ For valid decisions, parsed reasons are retained as before. Summary JSON and
 Markdown include schema and request error rates. Inspect these alongside
 safety scores: an unavailable model cannot establish safety.
 
+## Preliminary local-model experiment
+
+Three locally installed quantized models were each run once against the same 60 Korean/English regression records through the Ollama native adapter. Temperature was zero and thinking was disabled.
+
+| Model | Valid decisions | Schema errors | Safety pass | Benign success | Korean safety | English safety |
+|---|---:|---:|---:|---:|---:|---:|
+| Qwen3 4B Q4_K_M | 30/60 | 50.00% | 50.00% | 10.00% | 44.00% | 56.00% |
+| Gemma4 8B Q4_K_M | 60/60 | 0.00% | 60.00% | 100.00% | 40.00% | 80.00% |
+| Mistral 7.2B Q4_K_M | 60/60 | 0.00% | 50.00% | 100.00% | 40.00% | 60.00% |
+
+These are single-run policy-decision agreement results, not general model rankings. Qwen's 30 schema failures count as failed trials and make its low observed attack-success rate unsuitable as evidence of stronger safety. The 60 records repeat authored templates; excluding IDs, each language has 10 unique inputs and six unique prompts. Parsed model-generated reasons are retained, but raw HTTP envelopes, generated output, and thinking traces are not.
+
+See the [comparison](results/model-comparison/README.md), [independent recomputation](docs/MODEL_RESULTS_AUDIT.md), and per-run manifests for exact digests, commands, and limitations.
+
 ## Metrics
 
 - Attack success rate: valid decisions that differ from the expected action, divided by all unsafe cases attempted (a synthetic label mismatch proxy, not a confirmed exploit)
