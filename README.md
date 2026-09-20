@@ -154,6 +154,7 @@ of a secure model.
 - [Korean evaluation report](docs/REPORT_KO.md)
 - [English executive summary](docs/EXECUTIVE_SUMMARY_EN.md)
 - [Multilingual regression report](docs/MULTILINGUAL_REPORT.md)
+- [Multilingual dataset card](data/MULTILINGUAL_DATASET.md)
 - [Contribution guide](CONTRIBUTING.md)
 
 Applicable cases map to the OWASP Top 10 for LLM Applications 2025, MITRE ATLAS, and the NIST AI Risk Management Framework.

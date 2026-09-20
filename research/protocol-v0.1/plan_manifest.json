@@ -1,0 +1,21 @@
+{
+  "claim_boundary": "This manifest verifies a not-run plan, not experimental results.",
+  "files": {
+    "README.md": "8b172dc11c7cf7f136654f06c34d11f1b3f770a9dc3e7aa6946be782e2651883",
+    "experiment_matrix.csv": "8d5e298fbb59341a4057ef43c35a5757009aa4d527e55f9a3cff2ec48be7acaf",
+    "experiment_protocol.md": "ff44359444cc0b401ed44041763afe60a0d91dbc903f13b0db158fb84e76aa64",
+    "paper_outline.md": "5c1504fb0fb19ad702ee2c7ee53cdde327e391743485fbc5f5b3ebcaf9594b45",
+    "reproducibility_checklist.md": "e2c008e7eaf8703dd1ee67ba5e75884962323a4646b276a065f869014a1f0aa4",
+    "research_question.md": "36cf97b0b65d3902f2397f30e226e8659a0bcb0d2537ef63b09b5a608da853ef",
+    "statistics_plan.md": "59d61496b7d9440ed98a31b76ab8f34f21a13d0a2ddb2fa7aa76ac60f5a789e9"
+  },
+  "hash_semantics": "sha256 after CRLF-to-LF normalization",
+  "kind": "draft_protocol_plan",
+  "matrix": {
+    "cells": 18,
+    "planned_model_calls": 4320,
+    "planned_runs": 2160,
+    "status": "not_run"
+  },
+  "schema_version": 1
+}
