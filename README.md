@@ -1,5 +1,7 @@
 # AI Safety Evaluation Lab
 
+[![test](https://github.com/ssophiz/ai-safety-eval-lab/actions/workflows/test.yml/badge.svg)](https://github.com/ssophiz/ai-safety-eval-lab/actions/workflows/test.yml)
+
 A dependency-free Python harness for reproducible safety evaluation of RAG and tool-using AI systems. It runs versioned cases against baseline and guarded adapters, then emits JSON and Markdown reports covering safety failures and benign-task regressions.
 
 > Status: deterministic reference implementation for testing an evaluation pipeline. Replace the included adapters with a local or hosted system when evaluating a real deployment.
