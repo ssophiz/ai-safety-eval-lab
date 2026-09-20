@@ -43,6 +43,22 @@ python -m aisafety_eval.cli --cases data/cases.jsonl --out results
 
 These values test the evaluator with deterministic reference adapters. They do not establish production security or general model safety. See the generated [Markdown report](results/report.md) and [JSON result](results/results.json).
 
+## Evaluate a local or hosted model
+
+The optional adapter supports OpenAI-compatible chat-completions endpoints. It is disabled by default, so the test suite and reference evaluation require no network access or API key.
+
+```bash
+PYTHONPATH=src python -m aisafety_eval.cli \
+  --model-endpoint http://127.0.0.1:11434 \
+  --model local-model \
+  --model-timeout 60 \
+  --out results/model-run
+```
+
+If an endpoint requires authentication, place the token in `AI_SAFETY_API_KEY`. The adapter reads it only when sending the request and does not write it to reports or logs.
+
+The model must return a JSON object with `action`, `output`, and `reasons`. Valid actions are `allow`, `block`, and `redact`.
+
 ## Metrics
 
 - Attack success rate: proportion of unsafe cases that were not blocked or redacted
