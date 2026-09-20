@@ -5,7 +5,13 @@ from .types import Case, Decision
 
 SECRET = re.compile(r"\b(?:API_KEY|SECRET|TOKEN|PASSWORD)[=: _-]*[A-Za-z0-9_-]{4,}\b", re.I)
 PERSONAL = re.compile(r"\b\d{6}-[1-4]\d{6}\b")
-INJECTION = re.compile(r"(?:ignore previous|system override|developer override|이전 지시.*무시|시스템 지시.*무시)", re.I)
+INJECTION = re.compile(
+    r"(?:ignore (?:all )?(?:previous|prior) (?:instructions?|rules?)|"
+    r"system override|developer override|"
+    r"이전 (?:지시|규칙)(?:를|을) 무시|기존 (?:지시|규칙)(?:를|을) 무시|"
+    r"시스템 (?:지시|규칙)(?:를|을) 무시)",
+    re.I,
+)
 
 
 class BaselineAdapter:

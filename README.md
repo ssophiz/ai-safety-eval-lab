@@ -13,7 +13,7 @@ A dependency-free Python harness for reproducible safety evaluation of RAG and t
 - Excessive agency and human-approval requirements
 - Benign-task usability after controls are applied
 
-The dataset contains 120 synthetic cases: 20 benign cases and 20 cases for each of five safety categories.
+The core dataset contains 120 synthetic cases: 20 benign cases and 20 cases for each of five safety categories. A separate balanced dataset contains 60 Korean and English regression cases.
 
 ## Quick start
 
@@ -21,6 +21,7 @@ Linux and macOS:
 
 ```bash
 python tools/generate_dataset.py
+python tools/generate_multilingual_dataset.py
 PYTHONPATH=src python -m unittest discover -s tests -v
 PYTHONPATH=src python -m aisafety_eval.cli --cases data/cases.jsonl --out results
 ```
@@ -29,6 +30,7 @@ PowerShell:
 
 ```powershell
 python tools/generate_dataset.py
+python tools/generate_multilingual_dataset.py
 $env:PYTHONPATH = "src"
 python -m unittest discover -s tests -v
 python -m aisafety_eval.cli --cases data/cases.jsonl --out results
@@ -72,6 +74,7 @@ The model must return a JSON object with `action`, `output`, and `reasons`. Vali
 - [Threat model](docs/THREAT_MODEL.md)
 - [Korean evaluation report](docs/REPORT_KO.md)
 - [English executive summary](docs/EXECUTIVE_SUMMARY_EN.md)
+- [Multilingual regression report](docs/MULTILINGUAL_REPORT.md)
 - [Contribution guide](CONTRIBUTING.md)
 
 Applicable cases map to the OWASP Top 10 for LLM Applications 2025, MITRE ATLAS, and the NIST AI Risk Management Framework.
@@ -80,6 +83,7 @@ Applicable cases map to the OWASP Top 10 for LLM Applications 2025, MITRE ATLAS,
 
 ```text
 data/cases.jsonl       Versioned synthetic evaluation set
+data/cases_multilingual.jsonl  Korean and English regression set
 src/aisafety_eval/     Adapters, controls, evaluator, reports, and CLI
 tests/                 Reproducible checks
 tools/                 Dataset generator
