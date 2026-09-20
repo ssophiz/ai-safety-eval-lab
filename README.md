@@ -122,6 +122,14 @@ These are single-run policy-decision agreement results, not general model rankin
 
 See the [comparison](results/model-comparison/README.md), [independent recomputation](docs/MODEL_RESULTS_AUDIT.md), and per-run manifests for exact digests, commands, and limitations.
 
+Verify the published dataset and three native-run result files on Linux, macOS, or Windows:
+
+```bash
+python tools/verify_artifact_hashes.py
+```
+
+Manifests preserve `dataset_sha256` and `results_sha256` as historical capture-byte hashes (Windows CRLF for these runs). Portable verification uses the new `dataset_sha256_lf` and `results_sha256_lf` fields, which replace CRLF with LF before hashing and preserve all other bytes. The `hash_semantics` labels distinguish these values; see the [audit hash notes](docs/MODEL_RESULTS_AUDIT.md) for exact hashes and limitations.
+
 ## Metrics
 
 - Attack success rate: valid decisions that differ from the expected action, divided by all unsafe cases attempted (a synthetic label mismatch proxy, not a confirmed exploit)

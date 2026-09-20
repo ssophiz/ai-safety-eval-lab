@@ -57,16 +57,18 @@ All three primary runs use the native Ollama `/api/chat` endpoint with JSON outp
 
 The older Mistral run uses `/v1/chat/completions` with `response_format` set to `json_object`, and has no explicit thinking setting in its manifest. Its action labels happen to match the native Mistral run on all 60 IDs, while its mean latency is 1,397.83 ms rather than 1,717.70 ms. That observation does not isolate a protocol effect: the executions differ in time, protocol options, and possibly warm-up or system load. The older run is not pooled with the native results as a second identical-protocol repetition.
 
-The dataset and result bytes match the SHA-256 values recorded in every regenerated manifest. Each model name, digest, parameter count, and quantization also agrees with the live local `/api/tags` inventory checked during the audit. The capture utility verifies the expected native adapter and result count before writing `verified_completed_single_run`; the independent record audit above additionally checks individual IDs and summary arithmetic.
+The original `dataset_sha256` and `results_sha256` values identify the Windows CRLF capture bytes. They are preserved and labeled `capture_bytes` in `hash_semantics`; they do not identify the LF bytes stored in Git blobs or necessarily the bytes in a downloaded checkout. The additive `dataset_sha256_lf` and `results_sha256_lf` values identify the bytes after replacing CRLF (`\r\n`) with LF (`\n`), preserving every other byte, including lone carriage returns and the final newline. This is line-ending normalization, not JSON canonicalization. For the published artifacts, these normalized bytes equal the current Git blobs.
+
+Each model name, digest, parameter count, and quantization also agrees with the live local `/api/tags` inventory checked during the audit. The capture utility verifies the expected native adapter and result count before writing `verified_completed_single_run`; the independent record audit above additionally checks individual IDs and summary arithmetic.
 
 The regenerated manifests record Ollama 0.34.1, capture times between 07:28:10 and 07:28:11 UTC on 2026-09-20, and source revision `e6e1aac2b3068c5f77e6f3743aa7c1ad6db8b2fb`. The [public GitHub commit](https://github.com/ssophiz/ai-safety-eval-lab/commit/e6e1aac2b3068c5f77e6f3743aa7c1ad6db8b2fb) was independently confirmed to exist. Its object is absent from the local audit checkout, so this audit does not claim a local Git comparison against that revision. The revision was supplied to the capture command, and the runtime version and capture time were collected after inference; they are provenance records rather than an inference-time attestation.
 
 The manifests still omit a separate prompt hash, hardware inventory, warm-up and system-load measurements, inference-time model attestation, and complete raw responses. They therefore improve artifact traceability without reconstructing the entire original execution environment.
 
 <details>
-<summary>Exact hashes for checking the audited artifacts</summary>
+<summary>Historical capture-byte hashes and portable artifact verification</summary>
 
-Audit date: 2026-09-20 UTC; manifest hashes refreshed after the 07:28 UTC capture. Dataset SHA-256:
+Audit date: 2026-09-20 UTC. The hashes below are historical Windows CRLF capture-byte hashes from the 07:28 UTC capture. Manifest hashes refer to the original manifests before the 0.3.1 metadata additions, not the current manifest files. Historical dataset capture-byte SHA-256:
 
 ```text
 cbc70ed6ff2e0ddb2b7160fa66d4a21a01572a3b5349f3913ca625cc88d594de
@@ -78,11 +80,26 @@ cbc70ed6ff2e0ddb2b7160fa66d4a21a01572a3b5349f3913ca625cc88d594de
 | Gemma4 native | `c6eb396dbd5992bbe3f5cdb947e8bbc0ee413d7c17e2beaae69f5d569cf982eb` |
 | Mistral native | `6577803aa9a036369e481d648a2baebb381ebc6e897f2bb9a766a2aa7bfbc1cf` |
 
-| Run | Results file SHA-256 | Manifest file SHA-256 |
+| Run | Historical results capture-byte SHA-256 | Historical original-manifest capture-byte SHA-256 |
 |---|---|---|
 | Qwen3 native | `c205512db367cbd83366d8df8e357d4086d4d4134f4777dd8164cd97e22e423d` | `361d75ea274551390686f66852096e53792a39996676e692ff94256c443d70a4` |
 | Gemma4 native | `c0e0a2f461eb649f1c8488a3066f2038a3c5374e85beef2e34a2a97fc871b694` | `5f60c93c450a003c946bb4abb75be0709084dc399515e4a2b466759e7526d359` |
 | Mistral native | `8cb33bd29205a7b4fa0a79b42191af89928fe184e36f0033b3a1d02c8cb557c8` | `ee4d670562339d254cf06c0c4d0b0e6222d9f2021ca13ebca679cd7462c5d6bc` |
+
+Portable verification (Python standard library; run from the repository root):
+
+```bash
+python tools/verify_artifact_hashes.py
+```
+
+The verifier checks the LF-normalized dataset and result hashes in all three native-run manifests and exits nonzero on missing files or mismatches. It accepts LF and CRLF checkouts; it does not compare the legacy capture-byte hashes against checkout bytes or attest to the original inference environment. `--root PATH` can select another checkout; optional manifest paths are relative to that root.
+
+| Artifact | LF-normalized SHA-256 |
+|---|---|
+| `data/cases_multilingual.jsonl` | `f0bb5d45be9e6da3ad19c5e47bd09caab3002a2d980239f811c9c842f49c2094` |
+| `results/model-gemma4-native/results.json` | `b01860b4923180dc7a4537c4375f44ae92e113065baf45c2d84b1ec94af4b657` |
+| `results/model-mistral-native/results.json` | `2e928500287ec7bd9267c30ec6df4ba47b5c36660b0d07b7c7742b7692ca4f5d` |
+| `results/model-qwen3-4b-native/results.json` | `a3c99b9b10e9a422efe230e56f9f812412083a47b33dfdb92723d8b17975c12f` |
 
 </details>
 

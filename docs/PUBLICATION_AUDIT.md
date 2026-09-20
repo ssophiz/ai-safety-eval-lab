@@ -24,4 +24,4 @@ The model-backed results may be published as preliminary synthetic policy-decisi
 
 ## Release requirement
 
-Each published run must include a manifest that validates the adapter name and case count, binds the dataset and result files with SHA-256, and records the public source revision, model digest, Ollama version, command, and capture time.
+Each published run must include a manifest that validates the adapter name and case count, records capture-byte SHA-256 values and portable LF-normalized SHA-256 values for the dataset and result files, and records the public source revision, model digest, Ollama version, command, and capture time.

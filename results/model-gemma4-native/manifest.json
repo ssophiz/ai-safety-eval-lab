@@ -22,5 +22,13 @@
     "local quantized model",
     "no independent human adjudication",
     "single run"
-  ]
+  ],
+  "dataset_sha256_lf": "f0bb5d45be9e6da3ad19c5e47bd09caab3002a2d980239f811c9c842f49c2094",
+  "results_sha256_lf": "b01860b4923180dc7a4537c4375f44ae92e113065baf45c2d84b1ec94af4b657",
+  "hash_semantics": {
+    "dataset_sha256": "capture_bytes",
+    "results_sha256": "capture_bytes",
+    "dataset_sha256_lf": "crlf_to_lf_bytes",
+    "results_sha256_lf": "crlf_to_lf_bytes"
+  }
 }
