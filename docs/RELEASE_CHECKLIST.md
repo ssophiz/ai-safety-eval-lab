@@ -10,6 +10,8 @@
 - [x] Describe the experiment as synthetic policy-decision evaluation.
 - [x] Publish the tested harness revision (`e6e1aac2b3068c5f77e6f3743aa7c1ad6db8b2fb`).
 - [x] Regenerate verified manifests against that public revision.
-- [ ] Review the final staged result files and hashes.
-- [ ] Push the results commit and verify the remote revision.
-- [ ] Close the model-backed evaluation issue only after remote verification.
+- [x] Review the final staged result files and hashes.
+- [x] Run all 27 tests against the publication checkout.
+- [x] Push and verify results commit `57b5b6a286558e1836b179ef5291955a1a0f3622`.
+- [x] Verify the public comparison artifact through the GitHub API.
+- [ ] Close the model-backed evaluation issue after publishing the release.
