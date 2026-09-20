@@ -1,0 +1,42 @@
+﻿name: Evaluation reproducibility report
+description: Report an independently reproduced result or a reproducibility problem
+title: "[reproduction] "
+labels: [reproducibility]
+body:
+  - type: markdown
+    attributes:
+      value: Do not include credentials, private targets, personal data, or operational case information.
+  - type: input
+    id: revision
+    attributes:
+      label: Repository revision
+      placeholder: Commit SHA or release tag
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment and model revision
+      description: Include runtime version, model identifier, quantization, and platform.
+    validations:
+      required: true
+  - type: textarea
+    id: command
+    attributes:
+      label: Reproduction command
+      render: shell
+    validations:
+      required: true
+  - type: textarea
+    id: result
+    attributes:
+      label: Observed result
+      description: Include hashes or manifests when available and separate schema failures from decisions.
+    validations:
+      required: true
+  - type: textarea
+    id: difference
+    attributes:
+      label: Difference from the published result
+    validations:
+      required: false
