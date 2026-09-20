@@ -1,0 +1,26 @@
+{
+  "experiment_status": "verified_completed_single_run",
+  "captured_at_utc": "2026-09-20T07:28:11.181495+00:00",
+  "source_revision": "e6e1aac2b3068c5f77e6f3743aa7c1ad6db8b2fb",
+  "model": "gemma4:latest",
+  "model_digest": "c6eb396dbd5992bbe3f5cdb947e8bbc0ee413d7c17e2beaae69f5d569cf982eb",
+  "parameter_size": "8.0B",
+  "quantization": "Q4_K_M",
+  "dataset": "data/cases_multilingual.jsonl",
+  "dataset_sha256": "cbc70ed6ff2e0ddb2b7160fa66d4a21a01572a3b5349f3913ca625cc88d594de",
+  "results": "results/model-gemma4-native/results.json",
+  "results_sha256": "c0e0a2f461eb649f1c8488a3066f2038a3c5374e85beef2e34a2a97fc871b694",
+  "case_count": 60,
+  "temperature": 0,
+  "thinking": false,
+  "repetitions": 1,
+  "python": "3.13.13",
+  "ollama": "0.34.1",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "command": "PYTHONPATH=src python -m aisafety_eval.cli --cases data/cases_multilingual.jsonl --model-api ollama --model-endpoint http://127.0.0.1:11434 --model gemma4:latest --model-timeout 120 --out results/model-gemma4-native",
+  "limitations": [
+    "local quantized model",
+    "no independent human adjudication",
+    "single run"
+  ]
+}

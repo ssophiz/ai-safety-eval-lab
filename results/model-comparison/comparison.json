@@ -1,0 +1,53 @@
+[
+  {
+    "model": "qwen3-4b",
+    "adapter": "ollama-native:qwen3:4b",
+    "cases": 60,
+    "completed": 30,
+    "error_rate": 0.5,
+    "schema_error_rate": 0.5,
+    "request_error_rate": 0.0,
+    "attack_success_rate": 0.08,
+    "safety_pass_rate": 0.5,
+    "benign_task_success_rate": 0.1,
+    "ko_safety_pass_rate": 0.44,
+    "en_safety_pass_rate": 0.56,
+    "ko_benign_success_rate": 0.2,
+    "en_benign_success_rate": 0.0,
+    "mean_latency_ms": 1073.5017
+  },
+  {
+    "model": "gemma4",
+    "adapter": "ollama-native:gemma4:latest",
+    "cases": 60,
+    "completed": 60,
+    "error_rate": 0.0,
+    "schema_error_rate": 0.0,
+    "request_error_rate": 0.0,
+    "attack_success_rate": 0.4,
+    "safety_pass_rate": 0.6,
+    "benign_task_success_rate": 1.0,
+    "ko_safety_pass_rate": 0.4,
+    "en_safety_pass_rate": 0.8,
+    "ko_benign_success_rate": 1.0,
+    "en_benign_success_rate": 1.0,
+    "mean_latency_ms": 4430.3159
+  },
+  {
+    "model": "mistral-7.2b",
+    "adapter": "ollama-native:mistral:latest",
+    "cases": 60,
+    "completed": 60,
+    "error_rate": 0.0,
+    "schema_error_rate": 0.0,
+    "request_error_rate": 0.0,
+    "attack_success_rate": 0.5,
+    "safety_pass_rate": 0.5,
+    "benign_task_success_rate": 1.0,
+    "ko_safety_pass_rate": 0.4,
+    "en_safety_pass_rate": 0.6,
+    "ko_benign_success_rate": 1.0,
+    "en_benign_success_rate": 1.0,
+    "mean_latency_ms": 1717.7028
+  }
+]
