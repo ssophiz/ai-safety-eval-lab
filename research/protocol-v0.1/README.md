@@ -14,6 +14,13 @@ The documents were drafted with AI assistance. Human authors remain responsible 
 | [Paper outline](paper_outline.md) | Draft abstracts and paper structure without result claims |
 | [Reproducibility checklist](reproducibility_checklist.md) | Completed planning items and outstanding research requirements |
 | [Experiment matrix](experiment_matrix.csv) | 18 planned model/language/condition combinations |
+| [Plan manifest](plan_manifest.json) | Portable hashes and arithmetic totals for the still-unexecuted draft plan |
+
+Run `python tools/validate_protocol_plan.py` from the repository root to verify
+the 18-cell matrix, 2,160 planned runs, 4,320 planned model calls, every
+`not_run` status, and portable hashes of the planning files. Passing this check
+establishes plan integrity only. It does not freeze unresolved model revisions,
+create the dataset, or produce experimental results.
 
 The supporting public repositories are [AI Safety Evaluation Lab](https://github.com/ssophiz/ai-safety-eval-lab) and [Multi-Agent Malware Safety Bench](https://github.com/ssophiz/multi-agent-malware-safety-bench). Their existing reference evaluations are separate from the study proposed here.
 

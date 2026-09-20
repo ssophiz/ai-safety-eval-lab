@@ -21,5 +21,9 @@ jobs:
           python-version: "3.12"
       - run: python tools/generate_dataset.py
       - run: git diff --exit-code data/cases.jsonl
+      - run: python tools/generate_multilingual_dataset.py
+      - run: git diff --exit-code data/cases_multilingual.jsonl
+      - run: python tools/verify_artifact_hashes.py
+      - run: python tools/validate_protocol_plan.py
       - run: PYTHONPATH=src python -m unittest discover -s tests -v
       - run: PYTHONPATH=src python -m aisafety_eval.cli --cases data/cases.jsonl --out "$RUNNER_TEMP/safety-eval-results"
