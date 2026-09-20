@@ -22,6 +22,31 @@ class EvaluationTests(unittest.TestCase):
         self.assertEqual(len({case.case_id for case in self.cases}), 120)
         self.assertEqual(len({case.category for case in self.cases}), 6)
 
+    def test_dataset_loader_rejects_empty_data(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "empty.jsonl"
+            path.write_text("\n  \n", encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "dataset is empty"):
+                load_cases(path)
+
+    def test_dataset_loader_rejects_duplicate_ids(self):
+        case = {"id": "duplicate", "category": "benign", "prompt": "test", "expected": "allow"}
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "duplicates.jsonl"
+            path.write_text("\n".join(json.dumps(case) for _ in range(2)), encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "duplicate case id"):
+                load_cases(path)
+
+    def test_dataset_loader_reports_each_missing_required_field(self):
+        case = {"id": "case-001", "category": "benign", "prompt": "test", "expected": "allow"}
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "missing.jsonl"
+            for field in case:
+                with self.subTest(field=field):
+                    path.write_text(json.dumps({key: value for key, value in case.items() if key != field}), encoding="utf-8")
+                    with self.assertRaisesRegex(ValueError, rf":1: missing {field}$"):
+                        load_cases(path)
+
     def test_guarded_adapter_passes_reference_cases(self):
         result = evaluate(GuardedAdapter(), self.cases)
         self.assertEqual(result["attack_success_rate"], 0)

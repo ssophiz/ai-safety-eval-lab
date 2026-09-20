@@ -1,25 +1,23 @@
 # AI Safety Evaluation Lab
 
-A dependency-free evaluation harness for RAG and tool-using AI systems. It measures safety failures and normal-task regressions before and after controls are applied.
+A dependency-free Python harness for reproducible safety evaluation of RAG and tool-using AI systems. It runs versioned cases against baseline and guarded adapters, then emits JSON and Markdown reports covering safety failures and benign-task regressions.
 
-## Why this exists
+> Status: deterministic reference implementation for testing an evaluation pipeline. Replace the included adapters with a local or hosted system when evaluating a real deployment.
 
-Safety claims need reproducible evidence. This repository stores versioned test cases, runs the same cases against a baseline and a guarded adapter, and generates JSON and Markdown reports.
-
-The included adapters are deterministic reference implementations. They make the evaluation pipeline testable without API keys. Replace them with a local or hosted model adapter when evaluating a real system.
-
-## Coverage
+## What it evaluates
 
 - Direct and indirect prompt injection
-- Untrusted RAG instructions
-- Secret and personal-data disclosure
+- Instructions embedded in untrusted RAG content
+- Synthetic secret and personal-data disclosure
 - Tool authorization boundaries
-- Excessive agency and approval requirements
-- Benign-task regression
+- Excessive agency and human-approval requirements
+- Benign-task usability after controls are applied
 
-The taxonomy maps cases to OWASP Top 10 for LLM Applications 2025 and MITRE ATLAS where applicable.
+The dataset contains 120 synthetic cases: 20 benign cases and 20 cases for each of five safety categories.
 
-## Run
+## Quick start
+
+Linux and macOS:
 
 ```bash
 python tools/generate_dataset.py
@@ -30,29 +28,49 @@ PYTHONPATH=src python -m aisafety_eval.cli --cases data/cases.jsonl --out result
 PowerShell:
 
 ```powershell
-$env:PYTHONPATH = "src"
 python tools/generate_dataset.py
+$env:PYTHONPATH = "src"
 python -m unittest discover -s tests -v
 python -m aisafety_eval.cli --cases data/cases.jsonl --out results
 ```
 
+## Reference result
+
+| Adapter | Attack success | Safety pass | Benign-task success |
+|---|---:|---:|---:|
+| Baseline | 100.00% | 0.00% | 100.00% |
+| Guarded | 0.00% | 100.00% | 100.00% |
+
+These values test the evaluator with deterministic reference adapters. They do not establish production security or general model safety. See the generated [Markdown report](results/report.md) and [JSON result](results/results.json).
+
 ## Metrics
 
-- Attack success rate: unsafe cases that the system failed to block or redact
-- Safety pass rate: unsafe cases handled as expected
-- Benign task success rate: safe cases that remained usable
+- Attack success rate: proportion of unsafe cases that were not blocked or redacted
+- Safety pass rate: proportion of unsafe cases handled as expected
+- Benign-task success rate: proportion of safe cases that remained usable
 - Per-category pass rate
 - Mean evaluation latency
+
+## Documentation
+
+- [Threat model](docs/THREAT_MODEL.md)
+- [Korean evaluation report](docs/REPORT_KO.md)
+- [English executive summary](docs/EXECUTIVE_SUMMARY_EN.md)
+- [Contribution guide](CONTRIBUTING.md)
+
+Applicable cases map to the OWASP Top 10 for LLM Applications 2025, MITRE ATLAS, and the NIST AI Risk Management Framework.
 
 ## Repository layout
 
 ```text
-data/cases.jsonl          Versioned evaluation set
-src/aisafety_eval/        Adapters, controls, evaluator, CLI
-tests/                    Runnable checks
-docs/                     Threat model and reports
+data/cases.jsonl       Versioned synthetic evaluation set
+src/aisafety_eval/     Adapters, controls, evaluator, reports, and CLI
+tests/                 Reproducible checks
+tools/                 Dataset generator
+docs/                  Threat model and bilingual reports
+results/               Reference JSON and Markdown outputs
 ```
 
 ## Responsible use
 
-The cases use synthetic secrets, accounts, and documents. Do not add real credentials, personal data, confidential prompts, or operational law-enforcement material.
+All included credentials, accounts, documents, and personal data are synthetic. Do not add real credentials, personal data, confidential prompts, malware, or operational law-enforcement material.
