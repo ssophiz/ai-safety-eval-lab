@@ -13,7 +13,19 @@ def write_reports(results: list[dict], output_dir: str | Path) -> None:
             f"{result['safety_pass_rate']:.2%} | {result['benign_task_success_rate']:.2%} | "
             f"{result['mean_latency_ms']:.4f} ms |"
         )
-    lines.extend(["", "## Category results", ""])
+    lines.extend(["", "## Model response reliability", "",
+                  "| Adapter | Completed | Errors | Schema error rate | Request error rate |",
+                  "|---|---:|---:|---:|---:|"])
+    for result in results:
+        lines.append(
+            f"| {result['adapter']} | {result.get('completed_cases', result['total'])} | "
+            f"{result.get('error_rate', 0):.2%} | {result.get('schema_error_rate', 0):.2%} | "
+            f"{result.get('request_error_rate', 0):.2%} |"
+        )
+    lines.extend(["", "Errors are failed attempts, not observed attack successes. "
+                  "All rates include failed attempts in their denominators; "
+                  "attack success and safety pass need not sum to 100% when errors occur.",
+                  "", "## Category results", ""])
     for result in results:
         lines.append(f"### {result['adapter']}")
         lines.append("")
